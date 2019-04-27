@@ -1,0 +1,6 @@
+Cat
+Dog
+Mouse
+Fox
+Bear
+Hare
