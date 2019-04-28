@@ -50,7 +50,7 @@ public class Lingvo implements ActionListener {
 		Runnable myThread = new Runnable() {
 			public void run() {
 				try {
-					while(qCounter != sel.getLength() /*- 1*/) {
+					while(qCounter != sel.getLength()) {
 						if (needUpdate.get()) {
 							needUpdate.set(false);
 							Thread.sleep(2000);
