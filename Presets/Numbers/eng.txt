@@ -1,3 +1,4 @@
+Zero
 One
 Two
 Three
@@ -8,3 +9,7 @@ Seven
 Eight
 Nine
 Ten
+Eleven
+Twelve
+One hundred
+Two thousand
