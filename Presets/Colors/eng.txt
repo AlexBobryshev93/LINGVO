@@ -8,3 +8,8 @@ Grey
 Purple
 Cyan
 Pink
+Blue
+Orange
+Dark
+Light
+Silver
