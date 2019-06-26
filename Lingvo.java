@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.util.concurrent.atomic.*;
 
 public class Lingvo implements ActionListener {
-	private Backend back = Backend.getInstance();
-	private Selection sel = new Selection(back);
+	private Backend backend = Backend.getInstance();
+	private Selection selection = new Selection(backend);
 	private int qCounter = 0;
 	private AtomicBoolean needUpdate = new AtomicBoolean(false);
 	Thread thrd;
 	
 	JLabel sc, numb, ques, res;
-	JButton[] variants = new JButton[back.getDifficulty()];
+	JButton[] variants = new JButton[backend.getDifficulty()];
 	
 	public Lingvo() {
 		JFrame jfrm = new JFrame("LINGVO Training (by Alex Rock-n-Roller)");
@@ -19,21 +19,21 @@ public class Lingvo implements ActionListener {
 		jfrm.setSize(1024, 768);
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		sc = new JLabel("Score: " + back.getScore(), SwingConstants.CENTER);
+		sc = new JLabel("Score: " + backend.getScore(), SwingConstants.CENTER);
 		sc.setPreferredSize(new Dimension(400,20));
 		sc.setFont(new Font("Arial", Font.PLAIN, 18));
-		numb = new JLabel("Question " + (qCounter + 1) + "/" + sel.getLength(), SwingConstants.CENTER);
+		numb = new JLabel("Question " + (qCounter + 1) + "/" + selection.getLength(), SwingConstants.CENTER);
 		numb.setPreferredSize(new Dimension(400,20));
 		numb.setFont(new Font("Arial", Font.PLAIN, 18));
-		ques = new JLabel("The word " + "'" + back.getWord(sel.getQuestion(qCounter).getOrig(), sel.getQuestion(qCounter).getVariant(sel.getQuestion(qCounter).getRight())) + "'" + " means:", SwingConstants.CENTER);
+		ques = new JLabel("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:", SwingConstants.CENTER);
 		ques.setPreferredSize(new Dimension(400,200));
 		ques.setFont(new Font("Arial", Font.PLAIN, 18));
-		res = new JLabel(back.getResult(), SwingConstants.CENTER);
+		res = new JLabel(backend.getResult(), SwingConstants.CENTER);
 		res.setPreferredSize(new Dimension(400,200));
 		res.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		for (int i = 0; i < variants.length; i++) {
-			variants[i] = new JButton(back.getWord(sel.getQuestion(qCounter).getTransl(), sel.getQuestion(qCounter).getVariant(i)));
+			variants[i] = new JButton(backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(i)));
 			variants[i].setPreferredSize(new Dimension(600,50));
 			variants[i].setFont(new Font("Arial", Font.PLAIN, 18));
 			variants[i].addActionListener(this);
@@ -50,7 +50,7 @@ public class Lingvo implements ActionListener {
 		Runnable myThread = new Runnable() {
 			public void run() {
 				try {
-					while(qCounter != sel.getLength()) {
+					while(qCounter != selection.getLength()) {
 						if (needUpdate.get()) {
 							needUpdate.set(false);
 							Thread.sleep(2000);
@@ -75,31 +75,31 @@ public class Lingvo implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		String btn = ae.getActionCommand();
 		for (int i = 0; i < variants.length; i++) {
-			if (btn == back.getWord(sel.getQuestion(qCounter).getTransl(), sel.getQuestion(qCounter).getVariant(i))) {
-				back.setAnswer(i);
+			if (btn == backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(i))) {
+				backend.setAnswer(i);
 				break;
 			}
 		}
 		
-		if (back.getAnswer() == sel.getQuestion(qCounter).getRight()) {
-			variants[back.getAnswer()].setBackground(Color.green);
-			back.setScore(back.getScore() + 1);
-			back.setResult("You're right.");
+		if (backend.getAnswer() == selection.getQuestion(qCounter).getRight()) {
+			variants[backend.getAnswer()].setBackground(Color.green);
+			backend.setScore(backend.getScore() + 1);
+			backend.setResult("You're right.");
 		}
 		else {
-			variants[back.getAnswer()].setBackground(Color.red);
-			back.setResult("Wrong. The right answer is " + "'" + back.getWord(sel.getQuestion(qCounter).getTransl(), sel.getQuestion(qCounter).getVariant(sel.getQuestion(qCounter).getRight())) + "'.");
+			variants[backend.getAnswer()].setBackground(Color.red);
+			backend.setResult("Wrong. The right answer is " + "'" + backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'.");
 		}
 
-		res.setText(back.getResult());
-		sc.setText("Score: " + back.getScore());
+		res.setText(backend.getResult());
+		sc.setText("Score: " + backend.getScore());
 		qCounter++;
 		
 		//Finishing
-		if (qCounter == sel.getLength()) {
+		if (qCounter == selection.getLength()) {
 			for (int i = 0; i < variants.length; i++) variants[i].setEnabled(false);
 			for (int i = 0; i < variants.length; i++) variants[i].removeActionListener(this);
-			res.setText("The test is over. Your score: " + back.getScore());
+			res.setText("The test is over. Your score: " + backend.getScore());
 			return;
 		}
 
@@ -108,11 +108,11 @@ public class Lingvo implements ActionListener {
 	}
 
 	public void updateGUI() {
-		variants[back.getAnswer()].setBackground(null);
-		numb.setText("Question " + (qCounter + 1) + "/" + sel.getLength());
-		ques.setText("The word " + "'" + back.getWord(sel.getQuestion(qCounter).getOrig(), sel.getQuestion(qCounter).getVariant(sel.getQuestion(qCounter).getRight())) + "'" + " means:");
+		variants[backend.getAnswer()].setBackground(null);
+		numb.setText("Question " + (qCounter + 1) + "/" + selection.getLength());
+		ques.setText("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:");
 		res.setText("");
-		for (int i = 0; i < variants.length; i++) variants[i].setText(back.getWord(sel.getQuestion(qCounter).getTransl(), sel.getQuestion(qCounter).getVariant(i)));
+		for (int i = 0; i < variants.length; i++) variants[i].setText(backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(i)));
 		for (int i = 0; i < variants.length; i++) variants[i].setEnabled(true);
 	}
 	
