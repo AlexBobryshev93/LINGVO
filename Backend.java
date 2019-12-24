@@ -30,7 +30,8 @@ public class Backend {
  
 		//Reading the words using collections
 		if (!preset.equals("--User defined--")) path = "Presets/" + preset + "/";
-		try (BufferedReader fin1 = new BufferedReader(new FileReader(path + "eng.txt")); BufferedReader fin2 = new BufferedReader(new FileReader(path + "rus.txt"))) {
+		try (BufferedReader fin1 = new BufferedReader(new FileReader(path + "eng.txt")); 
+			BufferedReader fin2 = new BufferedReader(new FileReader(path + "rus.txt"))) {
 			for (;;) {
 				str = fin1.readLine();
 				if (str == null) break;
@@ -40,6 +41,7 @@ public class Backend {
 				rus.add(str);
 			}
 		}
+		
 		// fool protection?
 		/*
 		catch (FileNotFoundException exc) {
@@ -48,6 +50,7 @@ public class Backend {
 			result = "Reading data error occured. Default settings are used";
 		}
 		*/
+		
 		catch (IOException exc) {
 			result = "Reading data error.";
 			System.exit(1);

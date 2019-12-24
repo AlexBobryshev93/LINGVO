@@ -25,7 +25,9 @@ public class Lingvo implements ActionListener {
 		numb = new JLabel("Question " + (qCounter + 1) + "/" + selection.getLength(), SwingConstants.CENTER);
 		numb.setPreferredSize(new Dimension(400,20));
 		numb.setFont(new Font("Arial", Font.PLAIN, 18));
-		ques = new JLabel("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:", SwingConstants.CENTER);
+		ques = new JLabel("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), 
+										selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:", 
+										SwingConstants.CENTER);
 		ques.setPreferredSize(new Dimension(400,200));
 		ques.setFont(new Font("Arial", Font.PLAIN, 18));
 		res = new JLabel(backend.getResult(), SwingConstants.CENTER);
@@ -85,8 +87,7 @@ public class Lingvo implements ActionListener {
 			variants[backend.getAnswer()].setBackground(Color.green);
 			backend.setScore(backend.getScore() + 1);
 			backend.setResult("You're right.");
-		}
-		else {
+		} else {
 			variants[backend.getAnswer()].setBackground(Color.red);
 			backend.setResult("Wrong. The right answer is " + "'" + backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'.");
 		}
@@ -110,7 +111,8 @@ public class Lingvo implements ActionListener {
 	public void updateGUI() {
 		variants[backend.getAnswer()].setBackground(null);
 		numb.setText("Question " + (qCounter + 1) + "/" + selection.getLength());
-		ques.setText("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:");
+		ques.setText("The word " + "'" + backend.getWord(selection.getQuestion(qCounter).getOrig(), 
+								selection.getQuestion(qCounter).getVariant(selection.getQuestion(qCounter).getRight())) + "'" + " means:");
 		res.setText("");
 		for (int i = 0; i < variants.length; i++) variants[i].setText(backend.getWord(selection.getQuestion(qCounter).getTransl(), selection.getQuestion(qCounter).getVariant(i)));
 		for (int i = 0; i < variants.length; i++) variants[i].setEnabled(true);

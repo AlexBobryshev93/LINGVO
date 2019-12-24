@@ -17,18 +17,20 @@ public class Question {
 
 		for (int i = 0; i < backend.getDifficulty(); i++) {
 			if (variants.get(i) == num) continue;
+			
 			do {
 				do {
 					variants.set(i, (int) (Math.random() * backend.getRange()));
 				} while (variants.get(i) == num); // check if the next generated variant is the same with the right
+				
 				if (i != 0) {  // in order to avoid repetitions
 					for (int j = 0; j < i; j++) {
 						if (variants.get(i) == variants.get(j)) break;
 						if ((i - 1) == j) fit = true;
 					}
-				}
-				else fit = true;
+				} else fit = true;
 			} while (!fit);
+			
 			fit = false;
 		}
 	}
