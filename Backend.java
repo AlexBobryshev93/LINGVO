@@ -30,8 +30,8 @@ public class Backend {
  
 		//Reading the words using collections
 		if (!preset.equals("--User defined--")) path = "Presets/" + preset + "/";
-		try (BufferedReader fin1 = new BufferedReader(new FileReader(path + "eng.txt")); 
-			BufferedReader fin2 = new BufferedReader(new FileReader(path + "rus.txt"))) {
+		try (BufferedReader fin1 = new BufferedReader(new FileReader(path + "lang1.txt")); 
+			BufferedReader fin2 = new BufferedReader(new FileReader(path + "lang2.txt"))) {
 			for (;;) {
 				str = fin1.readLine();
 				if (str == null) break;
