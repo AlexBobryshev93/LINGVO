@@ -31,3 +31,7 @@ java -cp . Lingvo
 ```
 
 Now you are working with the standard configuration. Settings can be changed via the utility program.
+
+The words are stored in files `lang1.txt` and `lang2.txt` . You should put every word on a single line without tabs and line-breaks.
+The words should correspond their translation according to the line number (it's convenient to use text editors with line counters when you add
+new words).
